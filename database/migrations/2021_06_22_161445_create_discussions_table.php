@@ -17,8 +17,12 @@ class CreateDiscussionsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
+            $table->string('discussion');
+            $table->boolean('hasImage')->default(false);
+            $table->string('imageLink')->nullable();
             $table->string('color')->default('#67hh00');
             $table->bigInteger('section_id');
+            $table->bigInteger('user_id');
             $table->boolean("answered")->default(false);
             $table->boolean("pinned")->default(false);
             $table->boolean("closed")->default(false);

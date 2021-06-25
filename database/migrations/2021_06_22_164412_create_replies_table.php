@@ -15,6 +15,10 @@ class CreateRepliesTable extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
+            $table->bigInteger('comment_id');
+            $table->boolean('isEmoji')->default(false);
+            $table->string('reply');
             $table->timestamps();
         });
     }
