@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 $factory->define(Discussion::class, function (Faker $faker) {
     $title = $faker->unique()->sentence;
     $slug = Str::slug($title, '-');
-    $sectionLength = Discussion::all()->count();
+    $sectionLength = Section::all()->count();
     $userLength = \App\User::all()->count();
     return [
         'title'=> $title,
