@@ -111,6 +111,7 @@ class DiscussionController extends Controller
            $discussion->user_id =  $request->get('user_id');
 
         $discussion->update();
+        return $discussion;
     }
 
     /**

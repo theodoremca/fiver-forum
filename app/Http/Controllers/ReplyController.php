@@ -97,6 +97,7 @@ class ReplyController extends Controller
         $reply->user_id =  $request->get('user_id');
 
         $reply->update();
+        return $reply;
 
     }
 

@@ -100,6 +100,7 @@ class CommentController extends Controller
         $comment->user_id =  $request->get('user_id');
 
         $comment->update();
+        return  $comment;
     }
 
     /**

@@ -99,13 +99,14 @@ class SectionController extends Controller
         $name = $request->get('name');
         $slug = Str::slug($name, '-');
 
-            'name' => $name,
-            'description' => $request->get('description'),
-            'section_id' => $request->get('section_id'),
-            'slug' => $request-$slug,
+            $section->name = $name;
+            $section->description = $request->get('description');
+            $section->section_id = $request->get('section_id');
+            $section->slug = $request-$slug;
 //            'user_id' => $request->get('user_id')
 
         $section->update();
+        return  $section;
     }
 
     /**
