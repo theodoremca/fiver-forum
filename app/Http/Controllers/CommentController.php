@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Discussion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CommentController extends Controller
 {
@@ -13,7 +16,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return Comment::all();
     }
 
     /**
@@ -23,7 +26,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return view('home');
     }
 
     /**
@@ -34,7 +37,22 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'comment'=>'required',
+            'discussion_id'=>'required',
+            'user_id'=>'required'
+        ]);
+        $comment = $request->get('comment');
+        $comment = new Comment([
+            'discussion_id' => $request->get('discussion_id'),
+            'comment' => $comment,
+            'user_id' => $request->get('user_id'),
+            'isFile' =>str_starts_with($comment, 'https://firebasestorage.googleapis.com/'),
+            'file_comment'=> $request->get('file_comment'),
+        ]);
+        $comment->save();
+
+        return ['success'=>'Comment saved'];
     }
 
     /**
@@ -45,7 +63,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        return Comment::find($id);
     }
 
     /**
@@ -56,7 +74,7 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        return comment::find($id);
     }
 
     /**
@@ -68,7 +86,20 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $comment = comment::find($id);
+        $request->validate([
+            'comment'=>'required',
+            'discussion_id'=>'required',
+            'user_id'=>'required'
+        ]);
+        $comment->comment = $request->get('comment');;
+        $comment->discussion_id= $request->get('discussion_id');
+        $comment->isFile = str_starts_with($comment, 'https://firebasestorage.googleapis.com/');
+        $comment->file_comment = $request->get('file_comment');
+
+        $comment->user_id =  $request->get('user_id');
+
+        $comment->update();
     }
 
     /**
@@ -79,6 +110,8 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = comment::find($id);
+        $comment->delete();
+        return ['status'=>'true'];
     }
 }

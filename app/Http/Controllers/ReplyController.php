@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Discussion;
+use App\Reply;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -11,11 +12,11 @@ class ReplyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Reply[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        //
+        return Reply::all();
     }
 
     /**
@@ -25,7 +26,7 @@ class ReplyController extends Controller
      */
     public function create()
     {
-
+        return view('home');
     }
 
     /**
@@ -37,13 +38,14 @@ class ReplyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'comment'=>'required',
-            'discussion_id'=>'required',
+            'reply'=>'required',
+            'comment_id'=>'required',
             'user_id'=>'required'
         ]);
         $comment = new Comment([
-            'discussion_id' => $request->get('discussion_id'),
-            'comment' => $request->get('comment'),
+            'comment_id' => $request->get('comment_id'),
+            'isEmoji' => $request->get('isEmoji'),
+            'reply' => $request->get('comment'),
             'user_id' => $request->get('user_id')
         ]);
         $comment->save();
@@ -59,7 +61,7 @@ class ReplyController extends Controller
      */
     public function show($id)
     {
-        //
+        return Reply::find($id);
     }
 
     /**
@@ -70,7 +72,7 @@ class ReplyController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Reply::find($id);
     }
 
     /**
@@ -82,7 +84,20 @@ class ReplyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reply= Reply::find($id);
+        $request->validate([
+            'reply'=>'required',
+            'comment_id'=>'required',
+            'user_id'=>'required'
+        ]);
+
+        $reply->comment_id = $request->get('comment_id');
+        $reply->reply= $request->get('reply');
+        $reply->isEmoji = $request->get('isEmoji');
+        $reply->user_id =  $request->get('user_id');
+
+        $reply->update();
+
     }
 
     /**
@@ -93,6 +108,8 @@ class ReplyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Reply=Reply::find($id);
+        $Reply->delete();
+        return ['status'=>'true'];
     }
 }

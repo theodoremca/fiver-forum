@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Discussion;
+use App\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SectionController extends Controller
 {
@@ -13,7 +16,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        return Section::all();
     }
 
     /**
@@ -23,7 +26,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('section');
     }
 
     /**
@@ -34,7 +37,24 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'description'=>'required',
+            'section_id'=>'required',
+//            'user_id'=>'required'
+        ]);
+        $name = $request->get('name');
+        $slug = Str::slug($name, '-');
+        $section = new Section([
+            'name' => $name,
+            'description' => $request->get('description'),
+            'section_id' => $request->get('section_id'),
+            'slug' => $request-$slug,
+//            'user_id' => $request->get('user_id')
+        ]);
+        $section->save();
+
+        return ['success'=>'section added'];
     }
 
     /**
@@ -45,7 +65,7 @@ class SectionController extends Controller
      */
     public function show($id)
     {
-        //
+        return Section::find($id);
     }
 
     /**
@@ -56,7 +76,7 @@ class SectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Section::find($id);
     }
 
     /**
@@ -68,7 +88,24 @@ class SectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $section= Section::find($id);
+
+        $request->validate([
+            'name'=>'required',
+            'description'=>'required',
+            'section_id'=>'required',
+//            'user_id'=>'required'
+        ]);
+        $name = $request->get('name');
+        $slug = Str::slug($name, '-');
+
+            'name' => $name,
+            'description' => $request->get('description'),
+            'section_id' => $request->get('section_id'),
+            'slug' => $request-$slug,
+//            'user_id' => $request->get('user_id')
+
+        $section->update();
     }
 
     /**
