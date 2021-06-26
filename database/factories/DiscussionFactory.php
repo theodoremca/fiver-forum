@@ -17,7 +17,7 @@ $factory->define(Discussion::class, function (Faker $faker) {
         'title'=> $title,
         'slug'=> $slug,
         'user_id'=>$faker->numberBetween(1,$userLength),
-        'discussion'=>$faker->unique()->sentences,
+        'discussion'=>$faker->unique()->sentences(),
         'section_id'=>$faker->numberBetween(1,$sectionLength)
 
     ];

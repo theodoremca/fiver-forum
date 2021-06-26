@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('discussion_id');
             $table->boolean('isFile')->default(false);
+            $table->string('file_comment')->nullable();
             $table->string('comment');
             $table->timestamps();
         });

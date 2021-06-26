@@ -10,7 +10,7 @@ $factory->define(Reply::class, function (Faker $faker) {
     $userLength = \App\User::all()->count();
     return [
         'user_id'=>$faker->numberBetween(1,$userLength),
-        'reply'=>$faker->unique()->sentence,
+        'reply'=>$faker->unique()->sentence(),
         'comment_id'=>$faker->numberBetween(1,$commentLength)
     ];
 });

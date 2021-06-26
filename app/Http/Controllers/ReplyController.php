@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Discussion;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -23,18 +25,30 @@ class ReplyController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return string[]
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'comment'=>'required',
+            'discussion_id'=>'required',
+            'user_id'=>'required'
+        ]);
+        $comment = new Comment([
+            'discussion_id' => $request->get('discussion_id'),
+            'comment' => $request->get('comment'),
+            'user_id' => $request->get('user_id')
+        ]);
+        $comment->save();
+
+        return ['success'=>'Comment saved'];
     }
 
     /**

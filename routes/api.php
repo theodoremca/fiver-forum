@@ -21,3 +21,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/userr', function (Request $request) {
     return ["name"=>"theodore"];
 });
+
+Route::get('/homem', 'DiscussionController@index')->name('dis');
+
+Route::resource('Discussion','DiscussionController');
+Route::resource('Reply','ReplyController');
+Route::resource('Comment','CommentController');
+Route::resource('Section','SectionController');
+

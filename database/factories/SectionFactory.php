@@ -12,6 +12,6 @@ $factory->define(Section::class, function (Faker $faker) {
     return [
         'name'=> $name,
         'slug'=> $slug,
-        'subtitle'=>$faker->unique()->sentence,
+        'subtitle'=>$faker->unique()->sentence(),
     ];
 });
